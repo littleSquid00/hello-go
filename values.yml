@@ -1,0 +1,33 @@
+applicationName: "hello-go-app"
+
+deployment:
+  enabled: true
+  replicas: 1
+  containerSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
+  envFrom:
+    env:
+      type: secret
+      name: "${ env_secret_name }"
+  image:
+    repository: "${ image_repository }"
+    tag: "${ image_tag }"
+    pullPolicy: IfNotPresent
+  readinessProbe:
+    enabled: false
+  livenessProbe:
+    enabled: false
+  ports:
+    - name: http
+      containerPort: 1323
+
+service:
+  enabled: true
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 1323
+    targetPort: 1323
+ingress: { enabled: false }
