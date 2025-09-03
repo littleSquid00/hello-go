@@ -25,7 +25,8 @@ deployment:
 
 service:
   enabled: true
-  type: ClusterIP
+  type: LoadBalancer
+  annotation: {}
   ports:
   - name: http
     port: 1323
